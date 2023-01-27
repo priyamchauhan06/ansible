@@ -1,2 +1,6 @@
 [aws]
 35.93.25.151
+
+[aws:vars]
+ansible_ssh_user=ec2-user
+ansible_ssh_private_key_file=us-west-oregon-kp.pem
