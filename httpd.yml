@@ -1,0 +1,16 @@
+---
+- hosts: aws
+  gather_facts: False
+  become: yes
+  tasks:
+    - name: install httpd
+      yum:
+        name: httpd
+        state: latest
+        update_cache: yes
+        
+    - name: start httpd
+      service:
+        name: httpd
+        state: started
+        enabled: yes
