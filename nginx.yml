@@ -3,14 +3,22 @@
   gather_facts: False
   become: yes
   tasks:
+  # enable EPEL repo by installing the epel-release package
+    - name: install EPEL repo
+      become: yes
+      yum: name=epel-release state=present
+      
     - name: install nginx
       yum:
         name: nginx
         state: installed
         update_cache: yes
-        notify:
-          - start nginx
-        
-  handlers:
-    - name: start Nginx
-      service: name=nginx state=started
+
+    - name: Create default index page
+      copy:
+        dest: /usr/share/nginx/html/index.html
+        content: "Howdy from {{ ansible_hostname }}"
+    - name: Restart nginx
+      service:
+        name: nginx
+        state: restarted
