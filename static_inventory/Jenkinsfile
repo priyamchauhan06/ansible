@@ -1,0 +1,8 @@
+node {
+    stage ('git checkout'){
+        git branch: 'main', url: 'https://github.com/priyamchauhan06/ansible.git'
+    }
+    stage ('play ansible playbook'){
+        ansiblePlaybook credentialsId: 'us-west-pem-file', inventory: 'static_inventory/host.inv', playbook: 'static_inventory/ping.yml'
+    }
+}

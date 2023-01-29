@@ -1,0 +1,10 @@
+node {
+    stage ('git checkout'){
+        git branch: 'main', url: 'https://github.com/priyamchauhan06/ansible.git'
+    }
+    stage ('play ansible playbook'){
+        withCredentials([string(credentialsId: 'AWS_ACCESS_KEY', variable: 'AWS_ACCESS_KEY'), string(credentialsId: 'AWS_SECRET_KEY', variable: 'AWS_SECRET_KEY')]) {
+            ansiblePlaybook credentialsId: 'us-west-pem-file', inventory: 'dynamic_inventory/inventory_aws_ec2.yml', playbook: 'dynamic_inventory/ping.yml'
+        }
+    }
+}
