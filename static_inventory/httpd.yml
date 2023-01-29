@@ -1,0 +1,19 @@
+---
+- hosts: aws
+  gather_facts: False
+  become: yes
+  tasks:
+    - name: install httpd
+      yum:
+        name: httpd
+        state: latest
+        update_cache: yes
+    - name: Create default index page
+      copy:
+        dest: /var/www/html/index.html
+        content: "Hi! httpd is live"       
+    - name: start httpd
+      service:
+        name: httpd
+        state: started
+        enabled: yes
